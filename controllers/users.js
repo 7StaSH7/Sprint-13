@@ -17,5 +17,19 @@ module.exports.createUser = (req, res) => {
 module.exports.getSpecificUser = (req, res) => {
   User.findByIdAndRemove(req.params.id)
     .then((user) => res.send({ data: user }))
-    .catch(() => res.status(500).send({ message: 'Произошла ошибка при удалении карточки' }));
+    .catch((err) => res.status(500).send({ message: `Произошла ошибка при удалении карточки - ${err}` }));
+};
+
+module.exports.updateInfo = (req, res) => {
+  const { name, about } = req.body;
+  User.findByIdAndUpdate(req.params.id, { name, about })
+    .then((user) => res.send({ data: user }))
+    .catch((err) => res.status(500).send({ message: `Произошла ошибка при обновлении информации - ${err}` }));
+};
+
+module.exports.updateAvatar = (req, res) => {
+  const { avatar } = req.body;
+  User.findByIdAndUpdate(req.params.id, { avatar })
+    .then((user) => res.send({ data: user }))
+    .catch((err) => res.status(500).send({ message: `Произошла ошибка при обновлении информации - ${err}` }));
 };

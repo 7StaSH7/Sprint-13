@@ -17,7 +17,28 @@ module.exports.createCard = (req, res) => {
 };
 
 module.exports.deleteCard = (req, res) => {
-  Card.findByIdAndRemove(req.params.id)
+  const { id } = req.params;
+  Card.findByIdAndRemove({ _id: id })
     .then((card) => res.send({ data: card }))
-    .catch(() => res.status(500).send({ message: 'Произошла ошибка при удалении карточки' }));
+    .catch((err) => res.status(500).send({ message: `Произошла ошибка при удалении карточки - ${err}` }));
+};
+
+module.exports.likeCard = (req, res) => {
+  Card.findByIdAndUpdate(
+    req.params.id,
+    { $addToSet: { likes: req.user._id } },
+    { new: true },
+  )
+    .then((card) => res.send({ data: card }))
+    .catch((err) => res.status(500).send({ message: `Не удалось поставить лайк - ${err}` }));
+};
+
+module.exports.dislikeCard = (req, res) => {
+  Card.findByIdAndUpdate(
+    req.params.id,
+    { $pull: { likes: req.user._id } },
+    { new: true },
+  )
+    .then((card) => res.send({ data: card }))
+    .catch((err) => res.status(500).send({ message: `Не удалось убрать лайк - ${err}` }));
 };
