@@ -3,7 +3,7 @@ const Card = require('../models/card');
 module.exports.getCards = (req, res) => {
   Card.find({})
     .populate('owner')
-    .then((cards) => res.send({ data: cards }))
+    .then((cards) => (cards === null ? res.status(404).send({ message: 'В базе данных пока нет карточек' }) : res.send({ data: cards })))
     .catch(res.status(500).send({ message: 'Произошла ошибка при получении карточек' }));
 };
 
@@ -19,7 +19,7 @@ module.exports.createCard = (req, res) => {
 module.exports.deleteCard = (req, res) => {
   const { id } = req.params;
   Card.findByIdAndRemove({ _id: id })
-    .then((card) => res.send({ data: card }))
+    .then((card) => (card === null ? res.status(404).send({ message: `Карточка с таким id: ${id} не найдена` }) : res.send({ data: card })))
     .catch((err) => res.status(500).send({ message: `Произошла ошибка при удалении карточки - ${err}` }));
 };
 
@@ -29,7 +29,7 @@ module.exports.likeCard = (req, res) => {
     { $addToSet: { likes: req.user._id } },
     { new: true },
   )
-    .then((card) => res.send({ data: card }))
+    .then((card) => (card === null ? res.status(404).send({ message: `Карточка с таким id: ${req.params.id} не найдена` }) : res.send({ data: card })))
     .catch((err) => res.status(500).send({ message: `Не удалось поставить лайк - ${err}` }));
 };
 
@@ -39,6 +39,6 @@ module.exports.dislikeCard = (req, res) => {
     { $pull: { likes: req.user._id } },
     { new: true },
   )
-    .then((card) => res.send({ data: card }))
+    .then((card) => (card === null ? res.status(404).send({ message: `Карточка с таким id: ${req.params.id} не найдена` }) : res.send({ data: card })))
     .catch((err) => res.status(500).send({ message: `Не удалось убрать лайк - ${err}` }));
 };

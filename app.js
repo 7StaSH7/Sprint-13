@@ -18,7 +18,7 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 app.use((req, res, next) => {
   req.user = {
-    _id: '5d8b8592978f8 bd833ca8133',
+    _id: '5d8b8592978f8d833ca8133',
   };
   next();
 });

@@ -19,5 +19,14 @@
     "express": "^4.17.1",
     "mongoose": "^5.9.27",
     "path": "^0.12.7"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/7StaSH7/Sprint-13.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/7StaSH7/Sprint-13/issues"
+  },
+  "homepage": "https://github.com/7StaSH7/Sprint-13#readme"
 }
