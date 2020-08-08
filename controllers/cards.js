@@ -13,14 +13,14 @@ module.exports.createCard = (req, res) => {
 
   Card.create({ name, link, owner })
     .then((card) => res.send({ data: card }))
-    .catch((err) => res.status(500).send({ message: `Произошла ошибка при загрузки карточки - ${err}` }));
+    .catch((err) => res.status(500).send({ message: `Произошла ошибка при загрузки карточки - ${err.message}` }));
 };
 
 module.exports.deleteCard = (req, res) => {
   const { id } = req.params;
   Card.findByIdAndRemove({ _id: id })
     .then((card) => (card === null ? res.status(404).send({ message: `Карточка с таким id: ${id} не найдена` }) : res.send({ data: card })))
-    .catch((err) => res.status(500).send({ message: `Произошла ошибка при удалении карточки - ${err}` }));
+    .catch((err) => res.status(500).send({ message: `Произошла ошибка при удалении карточки - ${err.message}` }));
 };
 
 module.exports.likeCard = (req, res) => {
