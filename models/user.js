@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const validator = require('validator');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -16,7 +17,11 @@ const userSchema = new mongoose.Schema({
   avatar: {
     type: String,
     required: true,
-    match: /^(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png)$/,
+    validate: {
+      validator(link) {
+        return validator.isURL(link);
+      },
+    },
   },
 });
 
