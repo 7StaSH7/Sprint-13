@@ -20,7 +20,7 @@
     "express": "^4.17.1",
     "mongoose": "^5.9.27",
     "path": "^0.12.7",
-    "validator": "^13.1.1"
+    "validator": "^13.7.0"
   },
   "repository": {
     "type": "git",
